@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 3000"
+    ports:
+      - "3000:3000"
+    networks:
+      - homelogicai
+
+  backend:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:///./data/homelogicai.db
+      - SCRAPER_SERVICE_URL=http://scraper:8001
+    command: sh -c "pip install --no-cache-dir -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    networks:
+      - homelogicai
+
+  scraper:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./scraper:/app
+      - data:/app/data
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+      if [ ! -f /app/data/.playwright-chromium-installed ]; then
+      playwright install chromium --with-deps &&
+      touch /app/data/.playwright-chromium-installed;
+      fi &&
+      uvicorn main:app --host 0.0.0.0 --port 8001 --reload"
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/docs').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - homelogicai
+
+volumes:
+  data:
+
+networks:
+  homelogicai:
+    driver: bridge

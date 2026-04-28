@@ -23,7 +23,9 @@ class NotesPayload(BaseModel):
     content: str
 
 
-async def _user_category_with_room_project(db: AsyncSession, category_id: str, user_id: str):
+async def _user_category_with_room_project(
+    db: AsyncSession, category_id: str, user_id: str
+):
     try:
         cid = UUID(category_id)
         uid = UUID(user_id)
@@ -48,7 +50,9 @@ async def get_category_notes(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ) -> dict:
-    category, room, project = await _user_category_with_room_project(db, category_id, str(current_user.id))
+    category, room, project = await _user_category_with_room_project(
+        db, category_id, str(current_user.id)
+    )
     category_path = get_category_path(str(project.id), str(room.id), str(category.id))
     return {"category_id": str(category.id), "content": read_notes(category_path)}
 
@@ -60,7 +64,9 @@ async def put_category_notes(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ) -> dict:
-    category, room, project = await _user_category_with_room_project(db, category_id, str(current_user.id))
+    category, room, project = await _user_category_with_room_project(
+        db, category_id, str(current_user.id)
+    )
     category_path = get_category_path(str(project.id), str(room.id), str(category.id))
     write_notes(category_path, payload.content)
     return {"category_id": str(category.id), "content": payload.content}
@@ -92,12 +98,16 @@ async def get_project_journal(
 
     entries: list[dict] = []
     for category, room in result.all():
-        category_path = get_category_path(str(project.id), str(room.id), str(category.id))
+        category_path = get_category_path(
+            str(project.id), str(room.id), str(category.id)
+        )
         notes_content = read_notes(category_path)
         notes_file = category_path / "notes.md"
         if notes_content:
             updated_at = (
-                datetime.fromtimestamp(notes_file.stat().st_mtime).isoformat() if notes_file.exists() else None
+                datetime.fromtimestamp(notes_file.stat().st_mtime).isoformat()
+                if notes_file.exists()
+                else None
             )
             entries.append(
                 {

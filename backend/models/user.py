@@ -21,7 +21,9 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255))
     full_name: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -34,4 +36,6 @@ class User(Base):
     )
 
     def __repr__(self) -> str:
-        return f"User(id={self.id!s}, email={self.email!r}, is_active={self.is_active!r})"
+        return (
+            f"User(id={self.id!s}, email={self.email!r}, is_active={self.is_active!r})"
+        )

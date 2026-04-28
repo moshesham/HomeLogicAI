@@ -13,7 +13,6 @@ from sqlalchemy.pool import StaticPool
 
 from core.config import settings
 
-
 Base = declarative_base()
 
 

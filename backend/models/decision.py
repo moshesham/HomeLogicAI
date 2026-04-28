@@ -18,7 +18,9 @@ class Decision(Base):
     __tablename__ = "decisions"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    category_id: Mapped[UUID] = mapped_column(ForeignKey("categories.id", ondelete="CASCADE"), index=True)
+    category_id: Mapped[UUID] = mapped_column(
+        ForeignKey("categories.id", ondelete="CASCADE"), index=True
+    )
     product_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("products.id", ondelete="SET NULL"),
         nullable=True,
@@ -26,7 +28,9 @@ class Decision(Base):
     decision_type: Mapped[str] = mapped_column(String(50))
     rationale: Mapped[str] = mapped_column(String)
     source: Mapped[str | None] = mapped_column(String(100), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
     category: Mapped[Category] = relationship(back_populates="decisions")
     product: Mapped[Product | None] = relationship(back_populates="decisions")

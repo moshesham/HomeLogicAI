@@ -33,7 +33,9 @@ class ScrapeRequest(BaseModel):
 def _category_schema(slug: str) -> dict:
     schema_path = _CATEGORIES_DIR / f"{slug}.json"
     if not schema_path.exists():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category schema not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category schema not found"
+        )
     return json.loads(schema_path.read_text(encoding="utf-8"))
 
 
@@ -42,7 +44,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
         cid = UUID(category_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        ) from exc
 
     result = await db.execute(
         select(Category)
@@ -52,7 +56,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
     )
     category = result.scalar_one_or_none()
     if category is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        )
     return category
 
 
@@ -61,7 +67,9 @@ async def _user_product(db: AsyncSession, product_id: str, user_id: str) -> Prod
         pid = UUID(product_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Product not found"
+        ) from exc
 
     result = await db.execute(
         select(Product)
@@ -72,7 +80,9 @@ async def _user_product(db: AsyncSession, product_id: str, user_id: str) -> Prod
     )
     product = result.scalar_one_or_none()
     if product is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Product not found"
+        )
     return product
 
 
@@ -84,18 +94,28 @@ async def list_products(
 ) -> list[ProductResponse]:
     category = await _user_category(db, category_id, str(current_user.id))
     result = await db.execute(
-        select(Product).where(Product.category_id == category.id).order_by(Product.created_at.desc())
+        select(Product)
+        .where(Product.category_id == category.id)
+        .order_by(Product.created_at.desc())
     )
     products = result.scalars().all()
     return [
         ProductResponse.model_validate(
-            {**product.__dict__, "id": str(product.id), "category_id": str(product.category_id)}
+            {
+                **product.__dict__,
+                "id": str(product.id),
+                "category_id": str(product.category_id),
+            }
         )
         for product in products
     ]
 
 
-@router.post("/categories/{category_id}/products", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/categories/{category_id}/products",
+    response_model=ProductResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_product(
     category_id: str,
     payload: ProductCreate,
@@ -104,16 +124,22 @@ async def create_product(
 ) -> ProductResponse:
     category = await _user_category(db, category_id, str(current_user.id))
     product = Product(category_id=category.id, **payload.model_dump())
-    if not payload.is_manual:
-        product.is_manual = True
     db.add(product)
     await db.flush()
     return ProductResponse.model_validate(
-        {**product.__dict__, "id": str(product.id), "category_id": str(product.category_id)}
+        {
+            **product.__dict__,
+            "id": str(product.id),
+            "category_id": str(product.category_id),
+        }
     )
 
 
-@router.post("/categories/{category_id}/products/scrape", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/categories/{category_id}/products/scrape",
+    response_model=ProductResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def scrape_product(
     category_id: str,
     payload: ScrapeRequest,
@@ -130,7 +156,9 @@ async def scrape_product(
             )
             scrape_response.raise_for_status()
     except httpx.HTTPError as exc:
-        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Scraper service error") from exc
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY, detail="Scraper service error"
+        ) from exc
 
     scraped = scrape_response.json()
     product = Product(
@@ -152,7 +180,11 @@ async def scrape_product(
     await db.flush()
 
     return ProductResponse.model_validate(
-        {**product.__dict__, "id": str(product.id), "category_id": str(product.category_id)}
+        {
+            **product.__dict__,
+            "id": str(product.id),
+            "category_id": str(product.category_id),
+        }
     )
 
 
@@ -164,7 +196,11 @@ async def get_product(
 ) -> ProductResponse:
     product = await _user_product(db, product_id, str(current_user.id))
     return ProductResponse.model_validate(
-        {**product.__dict__, "id": str(product.id), "category_id": str(product.category_id)}
+        {
+            **product.__dict__,
+            "id": str(product.id),
+            "category_id": str(product.category_id),
+        }
     )
 
 
@@ -180,7 +216,11 @@ async def update_product(
         setattr(product, field, value)
     await db.flush()
     return ProductResponse.model_validate(
-        {**product.__dict__, "id": str(product.id), "category_id": str(product.category_id)}
+        {
+            **product.__dict__,
+            "id": str(product.id),
+            "category_id": str(product.category_id),
+        }
     )
 
 

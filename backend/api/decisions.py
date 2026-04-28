@@ -23,7 +23,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
         cid = UUID(category_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        ) from exc
 
     result = await db.execute(
         select(Category)
@@ -33,7 +35,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
     )
     category = result.scalar_one_or_none()
     if category is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        )
     return category
 
 
@@ -42,7 +46,9 @@ async def _user_decision(db: AsyncSession, decision_id: str, user_id: str) -> De
         did = UUID(decision_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Decision not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Decision not found"
+        ) from exc
 
     result = await db.execute(
         select(Decision)
@@ -53,11 +59,15 @@ async def _user_decision(db: AsyncSession, decision_id: str, user_id: str) -> De
     )
     decision = result.scalar_one_or_none()
     if decision is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Decision not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Decision not found"
+        )
     return decision
 
 
-@router.get("/categories/{category_id}/decisions", response_model=list[DecisionResponse])
+@router.get(
+    "/categories/{category_id}/decisions", response_model=list[DecisionResponse]
+)
 async def list_decisions(
     category_id: str,
     db: AsyncSession = Depends(get_db),
@@ -65,7 +75,9 @@ async def list_decisions(
 ) -> list[DecisionResponse]:
     category = await _user_category(db, category_id, str(current_user.id))
     result = await db.execute(
-        select(Decision).where(Decision.category_id == category.id).order_by(Decision.created_at.asc())
+        select(Decision)
+        .where(Decision.category_id == category.id)
+        .order_by(Decision.created_at.asc())
     )
     decisions = result.scalars().all()
     return [
@@ -81,7 +93,11 @@ async def list_decisions(
     ]
 
 
-@router.post("/categories/{category_id}/decisions", response_model=DecisionResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/categories/{category_id}/decisions",
+    response_model=DecisionResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_decision(
     category_id: str,
     payload: DecisionCreate,

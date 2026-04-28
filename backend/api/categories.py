@@ -27,7 +27,9 @@ _CATEGORIES_DIR = Path(__file__).resolve().parents[2] / "categories"
 def _category_schema(slug: str) -> dict:
     schema_path = _CATEGORIES_DIR / f"{slug}.json"
     if not schema_path.exists():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category schema not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category schema not found"
+        )
     return json.loads(schema_path.read_text(encoding="utf-8"))
 
 
@@ -36,7 +38,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
         cid = UUID(category_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        ) from exc
 
     result = await db.execute(
         select(Category)
@@ -47,7 +51,9 @@ async def _user_category(db: AsyncSession, category_id: str, user_id: str) -> Ca
     )
     category = result.scalar_one_or_none()
     if category is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Category not found"
+        )
     return category
 
 
@@ -60,7 +66,9 @@ async def list_categories(
     try:
         rid = UUID(room_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Room not found"
+        ) from exc
 
     room_result = await db.execute(
         select(Room)
@@ -68,7 +76,9 @@ async def list_categories(
         .where(Room.id == rid, Project.user_id == current_user.id)
     )
     if room_result.scalar_one_or_none() is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Room not found"
+        )
 
     result = await db.execute(
         select(Category)
@@ -83,14 +93,22 @@ async def list_categories(
                 **category.__dict__,
                 "id": str(category.id),
                 "room_id": str(category.room_id),
-                "selected_product_id": str(category.selected_product_id) if category.selected_product_id else None,
+                "selected_product_id": (
+                    str(category.selected_product_id)
+                    if category.selected_product_id
+                    else None
+                ),
             }
         )
         for category in categories
     ]
 
 
-@router.post("/rooms/{room_id}/categories", response_model=CategoryResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/rooms/{room_id}/categories",
+    response_model=CategoryResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_category(
     room_id: str,
     payload: CategoryCreate,
@@ -100,7 +118,9 @@ async def create_category(
     try:
         rid = UUID(room_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Room not found"
+        ) from exc
 
     room_result = await db.execute(
         select(Room)
@@ -108,7 +128,9 @@ async def create_category(
         .where(Room.id == rid, Project.user_id == current_user.id)
     )
     if room_result.scalar_one_or_none() is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Room not found"
+        )
 
     _category_schema(payload.category_slug)
 
@@ -120,7 +142,11 @@ async def create_category(
             **category.__dict__,
             "id": str(category.id),
             "room_id": str(category.room_id),
-            "selected_product_id": str(category.selected_product_id) if category.selected_product_id else None,
+            "selected_product_id": (
+                str(category.selected_product_id)
+                if category.selected_product_id
+                else None
+            ),
         }
     )
 
@@ -137,7 +163,11 @@ async def get_category(
             **category.__dict__,
             "id": str(category.id),
             "room_id": str(category.room_id),
-            "selected_product_id": str(category.selected_product_id) if category.selected_product_id else None,
+            "selected_product_id": (
+                str(category.selected_product_id)
+                if category.selected_product_id
+                else None
+            ),
         }
     )
 
@@ -164,7 +194,11 @@ async def update_category(
             **category.__dict__,
             "id": str(category.id),
             "room_id": str(category.room_id),
-            "selected_product_id": str(category.selected_product_id) if category.selected_product_id else None,
+            "selected_product_id": (
+                str(category.selected_product_id)
+                if category.selected_product_id
+                else None
+            ),
         }
     )
 
@@ -188,14 +222,20 @@ async def compare_category_products(
 ) -> dict:
     category = await _user_category(db, category_id, str(current_user.id))
 
-    query = select(Product).where(Product.category_id == category.id).order_by(Product.created_at.desc())
+    query = (
+        select(Product)
+        .where(Product.category_id == category.id)
+        .order_by(Product.created_at.desc())
+    )
     if product_ids:
         ids = []
         for product_id in product_ids:
             try:
                 ids.append(UUID(product_id))
             except ValueError as exc:
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid product id") from exc
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid product id"
+                ) from exc
         query = query.where(Product.id.in_(ids))
     else:
         query = query.limit(settings.max_compare_products)

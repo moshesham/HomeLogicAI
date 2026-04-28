@@ -36,7 +36,11 @@ def _project_budget_summary(project: Project) -> dict[str, float | None]:
         "total_budget": project.total_budget,
         "allocated": allocated if has_allocated else None,
         "actual": actual if has_actual else None,
-        "remaining": (project.total_budget - actual) if project.total_budget is not None and has_actual else None,
+        "remaining": (
+            (project.total_budget - actual)
+            if project.total_budget is not None and has_actual
+            else None
+        ),
     }
 
 
@@ -45,7 +49,9 @@ async def _get_user_project(db: AsyncSession, project_id: str, user_id: str) -> 
         pid = UUID(project_id)
         uid = UUID(user_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found") from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        ) from exc
 
     result = await db.execute(
         select(Project)
@@ -54,7 +60,9 @@ async def _get_user_project(db: AsyncSession, project_id: str, user_id: str) -> 
     )
     project = result.scalar_one_or_none()
     if project is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        )
     return project
 
 
@@ -85,7 +93,9 @@ async def list_projects(
     ]
 
 
-@router.post("/projects", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/projects", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED
+)
 async def create_project(
     payload: ProjectCreate,
     db: AsyncSession = Depends(get_db),
@@ -170,7 +180,9 @@ async def project_budget_breakdown(
     rooms_payload = []
     for room in project.rooms:
         room_categories = await db.execute(
-            select(Category).where(Category.room_id == room.id).order_by(Category.display_order)
+            select(Category)
+            .where(Category.room_id == room.id)
+            .order_by(Category.display_order)
         )
         categories = room_categories.scalars().all()
         rooms_payload.append(

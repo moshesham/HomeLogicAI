@@ -24,8 +24,14 @@ def get_category_path(project_id: str, room_id: str, category_id: str) -> Path:
     return get_room_path(project_id, room_id) / "categories" / category_id
 
 
-def get_product_path(project_id: str, room_id: str, category_id: str, product_id: str) -> Path:
-    return get_category_path(project_id, room_id, category_id) / "products" / f"{product_id}.json"
+def get_product_path(
+    project_id: str, room_id: str, category_id: str, product_id: str
+) -> Path:
+    return (
+        get_category_path(project_id, room_id, category_id)
+        / "products"
+        / f"{product_id}.json"
+    )
 
 
 def ensure_folder_structure(project_id: str, room_id: str, category_id: str) -> None:
@@ -41,7 +47,9 @@ def write_product_json(product: dict[str, Any]) -> None:
 
     ensure_folder_structure(project_id, room_id, category_id)
     product_path = get_product_path(project_id, room_id, category_id, product_id)
-    product_path.write_text(json.dumps(product, ensure_ascii=False, indent=2), encoding="utf-8")
+    product_path.write_text(
+        json.dumps(product, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
 
 def read_product_json(path: Path) -> dict[str, Any]:

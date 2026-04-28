@@ -33,10 +33,14 @@ async def _complete(system_prompt: str, user_content: str) -> str:
         system=system_prompt,
         messages=[{"role": "user", "content": user_content}],
     )
-    return "\n".join(block.text for block in response.content if getattr(block, "text", None)).strip()
+    return "\n".join(
+        block.text for block in response.content if getattr(block, "text", None)
+    ).strip()
 
 
-async def generate_buyer_guide(category_slug: str, category_schema: dict[str, Any]) -> str:
+async def generate_buyer_guide(
+    category_slug: str, category_schema: dict[str, Any]
+) -> str:
     system_prompt = _load_prompt(
         "buyer-guide.txt",
         "Generate a practical buyer guide for the requested category.",
@@ -49,7 +53,9 @@ async def generate_buyer_guide(category_slug: str, category_schema: dict[str, An
     return await _complete(system_prompt, user_content)
 
 
-async def summarize_product_specs(product: dict[str, Any], category_schema: dict[str, Any]) -> str:
+async def summarize_product_specs(
+    product: dict[str, Any], category_schema: dict[str, Any]
+) -> str:
     system_prompt = _load_prompt(
         "spec-summary.txt",
         "Summarize product specs into plain language and buying implications.",

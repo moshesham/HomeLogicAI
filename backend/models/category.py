@@ -19,7 +19,9 @@ class Category(Base):
     __tablename__ = "categories"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    room_id: Mapped[UUID] = mapped_column(ForeignKey("rooms.id", ondelete="CASCADE"), index=True)
+    room_id: Mapped[UUID] = mapped_column(
+        ForeignKey("rooms.id", ondelete="CASCADE"), index=True
+    )
     category_slug: Mapped[str] = mapped_column(String(120), index=True)
     display_name: Mapped[str] = mapped_column(String(255))
     status: Mapped[str] = mapped_column(String(50), default="researching")
@@ -32,7 +34,9 @@ class Category(Base):
     budget_estimated_low: Mapped[float | None] = mapped_column(nullable=True)
     budget_estimated_high: Mapped[float | None] = mapped_column(nullable=True)
     display_order: Mapped[int] = mapped_column(default=0)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

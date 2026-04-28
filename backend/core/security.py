@@ -26,7 +26,9 @@ def verify_token(token: str) -> dict[str, Any]:
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        payload = jwt.decode(
+            token, settings.secret_key, algorithms=[settings.algorithm]
+        )
     except JWTError as exc:
         raise credentials_exception from exc
     if not payload:

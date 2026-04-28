@@ -4,6 +4,9 @@ on:
   push:
     branches: ["**"]
 
+permissions:
+  contents: read
+
 jobs:
   python-lint:
     runs-on: ubuntu-latest

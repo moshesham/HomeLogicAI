@@ -36,7 +36,10 @@ is_sqlite = raw_database_url.startswith("sqlite://")
 engine_options: dict[str, object] = {}
 if is_sqlite:
     engine_options["connect_args"] = {"check_same_thread": False}
-    if ":memory:" in raw_database_url or "test" in raw_database_url:
+    sqlite_test_suffixes = ("/test.db", "/test.sqlite", "/test.sqlite3")
+    if raw_database_url.endswith(":memory:") or raw_database_url.endswith(
+        sqlite_test_suffixes
+    ):
         engine_options["poolclass"] = StaticPool
 
 engine: AsyncEngine = create_async_engine(database_url, **engine_options)
@@ -51,6 +54,7 @@ AsyncSessionLocal = async_sessionmaker(
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    """Yield a transactional session and finalize with commit/rollback."""
     async with AsyncSessionLocal() as session:
         try:
             yield session

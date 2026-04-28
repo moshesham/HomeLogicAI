@@ -25,7 +25,7 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs').read()"]
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost',8000), 3); s.close()"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -49,7 +49,7 @@ services:
     ports:
       - "8001:8001"
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/docs').read()"]
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost',8001), 3); s.close()"]
       interval: 30s
       timeout: 10s
       retries: 5

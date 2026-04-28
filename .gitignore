@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Downloaded product images in vault (don't commit product images)
+vault/**/*.jpg
+vault/**/*.jpeg
+vault/**/*.png
+vault/**/*.gif
+vault/**/*.webp
+
+# Generated comparison files can be regenerated from vault data
+# Comment out the lines below if you WANT to commit them
+# vault/**/comparison.md
+# vault/**/comparison.csv

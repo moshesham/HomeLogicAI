@@ -1,0 +1,52 @@
+# HomeLogic Configuration
+# Edit this file to match your renovation project.
+
+# ─────────────────────────────────────────────
+# Renovation Zones
+# List every room or area you are working on.
+# ─────────────────────────────────────────────
+renovation_zones:
+  - Kitchen
+  - Master Bath
+  - Guest Room
+  - Living Room
+  - Laundry Room
+
+# ─────────────────────────────────────────────
+# Vault Categories
+# Each category maps to a subfolder in /vault.
+# Add new entries here when you start tracking
+# a new product type.
+# ─────────────────────────────────────────────
+vault_categories:
+  - fans
+  - lighting
+  - hardware
+  - flooring
+  - cabinet_storage
+
+# ─────────────────────────────────────────────
+# Scraper Settings
+# ─────────────────────────────────────────────
+scraper:
+  # Save a local copy of the product image
+  save_image: true
+  # Request timeout in seconds
+  timeout: 15
+  # User-agent string sent with requests
+  user_agent: "Mozilla/5.0 (HomeLogic/1.0; +https://github.com/moshesham/HomeLogicAI)"
+
+# ─────────────────────────────────────────────
+# Compare Output
+# ─────────────────────────────────────────────
+compare:
+  # Default output format: "markdown" or "csv"
+  default_format: markdown
+  # Columns to include in comparison tables
+  columns:
+    - name
+    - price
+    - warranty
+    - material
+    - dimensions
+    - notes

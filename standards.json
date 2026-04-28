@@ -1,0 +1,159 @@
+{
+  "fans": {
+    "description": "Ceiling fans evaluated on airflow efficiency and long-term motor durability.",
+    "attributes": {
+      "motor_type": {
+        "preferred": "DC",
+        "acceptable": "AC",
+        "note": "DC motors use up to 70% less energy than AC motors and run quieter."
+      },
+      "cfm_rating": {
+        "minimum": 4000,
+        "recommended": 5000,
+        "high_performance": 7000,
+        "note": "CFM (Cubic Feet per Minute) measures airflow. For rooms over 200 sq ft, target ≥5000 CFM."
+      },
+      "blade_pitch_degrees": {
+        "minimum": 12,
+        "recommended": 14,
+        "maximum": 15,
+        "note": "Blade pitch affects how much air is moved per revolution. 12–15° is the sweet spot."
+      },
+      "noise_level_db": {
+        "excellent": 30,
+        "good": 40,
+        "acceptable": 50,
+        "note": "Anything above 50 dB will be audible in a quiet room."
+      },
+      "warranty_years": {
+        "minimum": 1,
+        "good": 5,
+        "excellent": "lifetime",
+        "note": "Motor warranty is the most important — look for a separate motor warranty."
+      },
+      "mounting_type": {
+        "options": ["flush", "downrod", "angled"],
+        "note": "Ceilings below 8 ft require a flush (hugger) mount for safety."
+      }
+    }
+  },
+  "lighting": {
+    "description": "Light fixtures evaluated on color quality, efficiency, and longevity.",
+    "attributes": {
+      "cri": {
+        "minimum": 80,
+        "recommended": 90,
+        "excellent": 95,
+        "note": "CRI (Color Rendering Index) measures how accurately a light renders colors. Below 80 makes food and skin look unnatural. Kitchens and bathrooms should be ≥90."
+      },
+      "color_temperature_kelvin": {
+        "warm_white": "2700–3000K",
+        "neutral_white": "3500–4000K",
+        "cool_white": "5000–6500K",
+        "recommendations": {
+          "bedroom": "2700–3000K",
+          "kitchen": "3000–4000K",
+          "bathroom": "3000–4000K",
+          "office": "4000–5000K"
+        }
+      },
+      "lumens_per_watt": {
+        "minimum": 60,
+        "good": 80,
+        "excellent": 100,
+        "note": "Higher lumens-per-watt = more efficient. LED fixtures should exceed 80 lm/W."
+      },
+      "dimming_compatible": {
+        "preferred": true,
+        "note": "Verify compatibility with your existing dimmer switch brand — many LEDs are not universally dimmable."
+      },
+      "warranty_years": {
+        "bulb_minimum": 3,
+        "fixture_minimum": 1,
+        "good": 5
+      }
+    }
+  },
+  "hardware": {
+    "description": "Kitchen and bathroom hardware evaluated on finish durability and dimensional accuracy.",
+    "attributes": {
+      "material": {
+        "tier_1": ["solid brass", "stainless steel 304"],
+        "tier_2": ["zinc alloy", "aluminum"],
+        "avoid": ["plastic internals on high-use items"],
+        "note": "Solid brass and 304 stainless steel are the most durable for wet environments."
+      },
+      "finish": {
+        "most_durable": ["PVD (Physical Vapor Deposition)", "powder coat"],
+        "good": ["brushed nickel", "oil-rubbed bronze (lacquered)"],
+        "avoid": ["chrome over plastic", "painted finishes on pulls"],
+        "note": "PVD finishes carry a lifetime warranty from most major manufacturers."
+      },
+      "center_to_center_mm": {
+        "common_sizes": [64, 76, 96, 128, 160],
+        "note": "Always measure center-to-center of existing hole spacing before ordering. Metric sizing is increasingly common on imported cabinetry."
+      },
+      "warranty": {
+        "finish_minimum": "lifetime",
+        "mechanical_minimum": 1,
+        "note": "Any hardware marketed for kitchen/bath use should carry a lifetime finish warranty."
+      }
+    }
+  },
+  "flooring": {
+    "description": "Flooring evaluated on wear resistance, moisture tolerance, and installation complexity.",
+    "attributes": {
+      "wear_layer_mil": {
+        "minimum": 6,
+        "recommended": 12,
+        "commercial_grade": 20,
+        "note": "For LVP/LVT: wear layer determines scratch and dent resistance. Under 6 mil is unsuitable for high-traffic areas."
+      },
+      "ac_rating": {
+        "scale": "AC1–AC5",
+        "residential_minimum": "AC3",
+        "commercial": "AC4–AC5",
+        "note": "For laminate flooring. AC3 handles moderate residential traffic; AC4+ for heavy use or light commercial."
+      },
+      "moisture_resistance": {
+        "wet_areas": "100% waterproof core required",
+        "note": "For bathrooms and kitchens, ensure the CORE is waterproof — not just the surface layer."
+      },
+      "installation_type": {
+        "options": ["floating", "glue-down", "nail/staple-down"],
+        "diy_friendly": ["floating"],
+        "note": "Floating installations allow for easier future replacement and are DIY-accessible."
+      }
+    }
+  },
+  "cabinet_storage": {
+    "description": "Cabinet storage solutions evaluated on weight capacity, spatial efficiency, and hardware quality.",
+    "attributes": {
+      "pullout_weight_capacity_lbs": {
+        "minimum": 75,
+        "recommended": 100,
+        "heavy_duty": 150,
+        "note": "Under-sink and pantry pull-outs holding pots and canned goods need ≥100 lbs capacity."
+      },
+      "drawer_slide_type": {
+        "preferred": "full-extension undermount",
+        "acceptable": "full-extension side-mount",
+        "avoid": ["partial extension", "epoxy-coated"],
+        "note": "Full-extension slides give 100% access to the drawer. Undermount slides are invisible and easier to level."
+      },
+      "soft_close": {
+        "preferred": true,
+        "note": "Soft-close hinges and slides dramatically extend cabinet box life by preventing slamming."
+      },
+      "box_material": {
+        "preferred": ["plywood (3/4 in)"],
+        "acceptable": ["MDF with hardwood face frame"],
+        "avoid": ["particleboard in wet zones"],
+        "note": "Plywood boxes resist moisture and hold screws better than particleboard. Critical in kitchen and bath."
+      },
+      "usable_volume_ratio": {
+        "note": "Measure interior usable depth vs. total cabinet depth. Factory cabinets often waste 20–30% of depth behind the face frame."
+      }
+    }
+  }
+}

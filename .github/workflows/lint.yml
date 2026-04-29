@@ -28,6 +28,7 @@ jobs:
 
   frontend-lint:
     runs-on: ubuntu-latest
+    if: ${{ hashFiles('frontend/package-lock.json') != '' }}
     defaults:
       run:
         working-directory: frontend

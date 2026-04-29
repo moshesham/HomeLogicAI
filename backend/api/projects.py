@@ -112,7 +112,14 @@ async def create_project(
             "id": str(project.id),
             "user_id": str(project.user_id),
             "room_count": 0,
-            "budget_summary": _project_budget_summary(project),
+            # New projects have no rooms yet — avoid lazy-loading the relationship.
+            "budget_summary": {
+                "total_budget": project.total_budget,
+                "allocated": None,
+                "actual": None,
+                "remaining": None,
+            },
+            "rooms": [],
         }
     )
 
@@ -158,7 +165,11 @@ async def update_project(
     )
 
 
-@router.delete("/projects/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/projects/{project_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_model=None,
+)
 async def delete_project(
     project_id: str,
     db: AsyncSession = Depends(get_db),

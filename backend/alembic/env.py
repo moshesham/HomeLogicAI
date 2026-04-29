@@ -19,7 +19,18 @@ from backend.core.database import Base  # noqa: E402
 import backend.models  # noqa: E402, F401
 
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.database_url)
+
+
+def _async_db_url(url: str) -> str:
+    """Convert a sync SQLAlchemy URL to the appropriate async driver URL."""
+    if url.startswith("sqlite://"):
+        return url.replace("sqlite://", "sqlite+aiosqlite://", 1)
+    if url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    return url
+
+
+config.set_main_option("sqlalchemy.url", _async_db_url(settings.database_url))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

@@ -30,7 +30,10 @@ def _normalize_database_url(database_url: str) -> str:
 
 raw_database_url = settings.database_url
 database_url = _normalize_database_url(raw_database_url)
-is_sqlite = raw_database_url.startswith("sqlite://")
+# Treat both "sqlite://" and already-normalised "sqlite+aiosqlite://" URLs as SQLite
+is_sqlite = raw_database_url.startswith("sqlite://") or raw_database_url.startswith(
+    "sqlite+aiosqlite://"
+)
 
 engine_options: dict[str, object] = {}
 if is_sqlite:

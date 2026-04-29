@@ -1,39 +1,104 @@
+# ------------------------------
 # Python
+# ------------------------------
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
+*.so
 .Python
-*.egg
-*.egg-info/
-dist/
 build/
+dist/
 .eggs/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
 
 # Virtual environments
-venv/
 .venv/
+venv/
 env/
-.env/
+ENV/
 
-# IDE
+# ------------------------------
+# Node / React
+# ------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.parcel-cache/
+.next/
+.nuxt/
+.svelte-kit/
+dist/
+coverage/
+.eslintcache
+*.tsbuildinfo
+
+# ------------------------------
+# Env files
+# ------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------
+# SQLite / local DB
+# ------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# ------------------------------
+# Docker
+# ------------------------------
+.docker/
+
+# ------------------------------
+# OS files
+# ------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# ------------------------------
+# Editors / IDEs
+# ------------------------------
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
-.DS_Store
-Thumbs.db
+# ------------------------------
+# Project data and runtime artifacts
+# ------------------------------
+data/
+logs/
+*.log
 
-# Downloaded product images in vault (don't commit product images)
+# Existing vault image artifacts
 vault/**/*.jpg
 vault/**/*.jpeg
 vault/**/*.png
 vault/**/*.gif
 vault/**/*.webp
 
-# Generated comparison files can be regenerated from vault data
-# Comment out the lines below if you WANT to commit them
+# Generated comparison files (optional)
 # vault/**/comparison.md
 # vault/**/comparison.csv

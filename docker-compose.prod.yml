@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homelogicai
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/Dockerfile.backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      SCRAPER_SERVICE_URL: http://scraper:8001
+    command: sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - homelogicai
+
+  scraper:
+    build:
+      context: ./scraper
+      dockerfile: ../docker/Dockerfile.scraper
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --workers 4
+    networks:
+      - homelogicai
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/Dockerfile.frontend
+    networks:
+      - homelogicai
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+      - scraper
+    networks:
+      - homelogicai
+
+networks:
+  homelogicai:
+    driver: bridge

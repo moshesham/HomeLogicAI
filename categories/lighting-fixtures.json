@@ -1,0 +1,124 @@
+{
+  "slug": "lighting-fixtures",
+  "display_name": "Lighting Fixtures",
+  "description": "Decorative and task lighting assessed by output, color quality, efficiency, and dimming behavior.",
+  "attributes": [
+    {
+      "key": "light_output_lumens",
+      "label": "Light Output",
+      "type": "number",
+      "unit": "lumens",
+      "importance": "critical",
+      "explanation": "Lumens determine usable brightness, not watts.",
+      "retailer_aliases": {
+        "home_depot": [
+          "lumens",
+          "brightness"
+        ],
+        "wayfair": [
+          "light output",
+          "lumens"
+        ],
+        "lowes": [
+          "light output (lumens)"
+        ]
+      }
+    },
+    {
+      "key": "color_temperature_k",
+      "label": "Color Temperature",
+      "type": "number",
+      "unit": "K",
+      "importance": "high",
+      "explanation": "Choose warm/neutral/cool temperatures by room function.",
+      "retailer_aliases": {
+        "home_depot": [
+          "color temperature"
+        ],
+        "wayfair": [
+          "kelvin"
+        ],
+        "lowes": [
+          "color temperature (kelvin)"
+        ]
+      }
+    },
+    {
+      "key": "cri",
+      "label": "CRI",
+      "type": "number",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Higher CRI improves color accuracy for kitchens, baths, and vanities.",
+      "retailer_aliases": {
+        "home_depot": [
+          "color rendering index"
+        ],
+        "wayfair": [
+          "cri"
+        ],
+        "lowes": [
+          "color rendering"
+        ]
+      }
+    },
+    {
+      "key": "dimmable",
+      "label": "Dimmable",
+      "type": "boolean",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Not all LED fixtures are dimmer-compatible with existing switches.",
+      "retailer_aliases": {
+        "home_depot": [
+          "dimmable"
+        ],
+        "wayfair": [
+          "dimmable"
+        ],
+        "lowes": [
+          "dimmable"
+        ]
+      }
+    },
+    {
+      "key": "wet_location",
+      "label": "Wet/Damp Rating",
+      "type": "enum",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Bathroom exteriors and outdoor areas require suitable location ratings.",
+      "retailer_aliases": {
+        "home_depot": [
+          "location use"
+        ],
+        "wayfair": [
+          "location rating"
+        ],
+        "lowes": [
+          "safety listing"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Integrated LED Replacement",
+      "description": "Integrated modules can be harder to replace than bulb-based fixtures."
+    },
+    {
+      "title": "Dimmer Flicker",
+      "description": "Pair fixture and dimmer by manufacturer compatibility list."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "Size fixture to room and ceiling height.",
+    "Use CRI 90+ for true color rendering in task zones.",
+    "Check dimmer compatibility before installation."
+  ],
+  "contractor_questions": [
+    "Will this fixture require new junction box support?",
+    "Can we put this fixture on existing dimmer circuits?",
+    "What lumen target is appropriate for this room size?"
+  ]
+}

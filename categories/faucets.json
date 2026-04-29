@@ -1,0 +1,122 @@
+{
+  "slug": "faucets",
+  "display_name": "Faucets",
+  "description": "Sink and bath faucets evaluated for valve quality, flow performance, and installation constraints.",
+  "attributes": [
+    {
+      "key": "primary_material",
+      "label": "Primary Material",
+      "type": "enum",
+      "unit": "",
+      "importance": "critical",
+      "explanation": "Material choice drives durability, maintenance, and long-term cost.",
+      "retailer_aliases": {
+        "home_depot": [
+          "material"
+        ],
+        "wayfair": [
+          "material"
+        ],
+        "lowes": [
+          "material"
+        ]
+      }
+    },
+    {
+      "key": "size_spec",
+      "label": "Size Specification",
+      "type": "text",
+      "unit": "",
+      "importance": "critical",
+      "explanation": "Dimensional fit is usually the first pass/fail criterion.",
+      "retailer_aliases": {
+        "home_depot": [
+          "dimensions"
+        ],
+        "wayfair": [
+          "overall dimensions"
+        ],
+        "lowes": [
+          "size"
+        ]
+      }
+    },
+    {
+      "key": "performance_metric",
+      "label": "Performance Metric",
+      "type": "text",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Category-specific performance metric should be compared side-by-side.",
+      "retailer_aliases": {
+        "home_depot": [
+          "performance"
+        ],
+        "wayfair": [
+          "product features"
+        ],
+        "lowes": [
+          "key feature"
+        ]
+      }
+    },
+    {
+      "key": "warranty",
+      "label": "Warranty",
+      "type": "text",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Warranty terms signal manufacturer confidence and replacement risk.",
+      "retailer_aliases": {
+        "home_depot": [
+          "warranty"
+        ],
+        "wayfair": [
+          "warranty"
+        ],
+        "lowes": [
+          "warranty"
+        ]
+      }
+    },
+    {
+      "key": "maintenance_level",
+      "label": "Maintenance Level",
+      "type": "enum",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Maintenance needs affect ongoing cost and owner satisfaction.",
+      "retailer_aliases": {
+        "home_depot": [
+          "care instructions"
+        ],
+        "wayfair": [
+          "care"
+        ],
+        "lowes": [
+          "maintenance"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Hidden Install Costs",
+      "description": "Trim kits, adapters, or substrate prep can materially change final price."
+    },
+    {
+      "title": "Code Compatibility",
+      "description": "Local plumbing/electrical/building codes may restrict allowed products."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "Validate rough-in and dimensional fit before purchase.",
+    "Compare warranty exclusions, not just duration.",
+    "Confirm replacement part availability and lead times."
+  ],
+  "contractor_questions": [
+    "What site conditions could make this product unsuitable?",
+    "Are there code or manufacturer requirements we must follow exactly?",
+    "What accessory parts are required beyond the base product?"
+  ]
+}

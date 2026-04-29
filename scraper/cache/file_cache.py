@@ -39,7 +39,9 @@ class FileCache:
             "ttl": self.ttl_seconds,
             "data": data,
         }
-        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     def invalidate(self, url: str) -> None:
         path = self._path(url)

@@ -24,7 +24,11 @@ class AmazonScraper(BaseScraper):
         page_text = soup.get_text(" ", strip=True).lower()
         if "captcha" in page_text or "enter the characters you see" in page_text:
             return {
-                "name": clean_text(soup.select_one("#productTitle").get_text()) if soup.select_one("#productTitle") else "",
+                "name": (
+                    clean_text(soup.select_one("#productTitle").get_text())
+                    if soup.select_one("#productTitle")
+                    else ""
+                ),
                 "price": None,
                 "currency": "USD",
                 "images": [],
@@ -34,8 +38,16 @@ class AmazonScraper(BaseScraper):
                 "captcha_detected": True,
             }
 
-        name = clean_text(soup.select_one("#productTitle").get_text()) if soup.select_one("#productTitle") else ""
-        price_text = clean_text(soup.select_one(".a-price-whole").get_text()) if soup.select_one(".a-price-whole") else ""
+        name = (
+            clean_text(soup.select_one("#productTitle").get_text())
+            if soup.select_one("#productTitle")
+            else ""
+        )
+        price_text = (
+            clean_text(soup.select_one(".a-price-whole").get_text())
+            if soup.select_one(".a-price-whole")
+            else ""
+        )
 
         raw_specs: dict[str, str] = {}
         table = soup.select_one("#productDetails_techSpec_section_1")
@@ -94,11 +106,21 @@ class AmazonScraper(BaseScraper):
                 return partial
 
             await page.wait_for_selector("#productTitle", timeout=30000)
-            name = clean_text(await page.eval_on_selector("#productTitle", "el => el?.textContent || ''"))
-            price_text = clean_text(await page.eval_on_selector(".a-price-whole", "el => el?.textContent || ''"))
+            name = clean_text(
+                await page.eval_on_selector(
+                    "#productTitle", "el => el?.textContent || ''"
+                )
+            )
+            price_text = clean_text(
+                await page.eval_on_selector(
+                    ".a-price-whole", "el => el?.textContent || ''"
+                )
+            )
 
             raw_specs: dict[str, str] = {}
-            rows = await page.query_selector_all("#productDetails_techSpec_section_1 tr")
+            rows = await page.query_selector_all(
+                "#productDetails_techSpec_section_1 tr"
+            )
             for row in rows:
                 cells = await row.query_selector_all("th,td")
                 if len(cells) >= 2:

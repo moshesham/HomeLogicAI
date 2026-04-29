@@ -14,9 +14,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from backend.core.config import settings
-from backend.core.database import Base
-from backend.models import Category, Decision, Product, Project, Room, User  # noqa: F401
+from backend.core.config import settings  # noqa: E402
+from backend.core.database import Base  # noqa: E402
+import backend.models  # noqa: E402, F401
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.database_url)

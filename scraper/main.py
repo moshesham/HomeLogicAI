@@ -18,7 +18,9 @@ from scraper.engines import (
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import normalize_spec_map
 
-app = FastAPI(title="HomeLogicAI Scraper", version="0.1.0", description="Retail scraper service")
+app = FastAPI(
+    title="HomeLogicAI Scraper", version="0.1.0", description="Retail scraper service"
+)
 
 
 class ScrapeRequest(BaseModel):

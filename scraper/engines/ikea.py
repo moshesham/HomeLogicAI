@@ -22,13 +22,19 @@ class IkeaScraper(BaseScraper):
             await page.wait_for_selector(".product-header__title", timeout=30000)
 
             name = clean_text(
-                await page.eval_on_selector(".product-header__title", "el => el?.textContent || ''")
+                await page.eval_on_selector(
+                    ".product-header__title", "el => el?.textContent || ''"
+                )
             )
             price_text = clean_text(
-                await page.eval_on_selector(".pip-price__integer", "el => el?.textContent || ''")
+                await page.eval_on_selector(
+                    ".pip-price__integer", "el => el?.textContent || ''"
+                )
             )
 
-            feature_nodes = await page.query_selector_all(".product-details__feature-list li")
+            feature_nodes = await page.query_selector_all(
+                ".product-details__feature-list li"
+            )
             raw_specs: dict[str, str] = {}
             for index, node in enumerate(feature_nodes, start=1):
                 value = clean_text(await node.inner_text())

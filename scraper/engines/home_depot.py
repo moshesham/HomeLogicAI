@@ -19,11 +19,19 @@ class HomeDepotScraper(BaseScraper):
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()
             await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            await page.wait_for_selector('[data-testid="product-details"]', timeout=30000)
+            await page.wait_for_selector(
+                '[data-testid="product-details"]', timeout=30000
+            )
 
-            name = clean_text(await page.eval_on_selector("h1.product-title", "el => el?.textContent || ''"))
+            name = clean_text(
+                await page.eval_on_selector(
+                    "h1.product-title", "el => el?.textContent || ''"
+                )
+            )
             price_text = clean_text(
-                await page.eval_on_selector(".price-format__main-price", "el => el?.textContent || ''")
+                await page.eval_on_selector(
+                    ".price-format__main-price", "el => el?.textContent || ''"
+                )
             )
 
             spec_rows = await page.query_selector_all("table.specifications-table tr")
@@ -43,7 +51,9 @@ class HomeDepotScraper(BaseScraper):
                 if src and src not in images:
                     images.append(src)
 
-            breadcrumbs = await page.query_selector_all('nav[aria-label="Breadcrumb"] a')
+            breadcrumbs = await page.query_selector_all(
+                'nav[aria-label="Breadcrumb"] a'
+            )
             breadcrumb_text = [clean_text(await b.inner_text()) for b in breadcrumbs]
 
             await browser.close()

@@ -39,7 +39,9 @@ class GenericScraper(BaseScraper):
                 price_text = clean_text(node.get_text(" ", strip=True))
                 break
         if not price_text:
-            match = re.search(r"\$\s*[\d,]+(?:\.\d{1,2})?", soup.get_text(" ", strip=True))
+            match = re.search(
+                r"\$\s*[\d,]+(?:\.\d{1,2})?", soup.get_text(" ", strip=True)
+            )
             if match:
                 price_text = match.group(0)
 

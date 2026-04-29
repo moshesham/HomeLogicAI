@@ -19,7 +19,9 @@ class WayfairScraper(BaseScraper):
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()
             await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            await page.wait_for_selector(".ProductDetailInfoBlock-heading", timeout=30000)
+            await page.wait_for_selector(
+                ".ProductDetailInfoBlock-heading", timeout=30000
+            )
 
             name = clean_text(
                 await page.eval_on_selector(

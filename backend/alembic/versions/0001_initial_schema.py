@@ -49,10 +49,14 @@ def upgrade() -> None:
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("address", sa.String(length=500), nullable=True),
         sa.Column("total_budget", sa.Float(), nullable=True),
-        sa.Column("status", sa.String(length=50), nullable=False, server_default="active"),
+        sa.Column(
+            "status", sa.String(length=50), nullable=False, server_default="active"
+        ),
         sa.Column("start_date", sa.Date(), nullable=True),
         sa.Column("notes", sa.String(), nullable=True),
-        sa.Column("contacts", sa.JSON(), nullable=False, server_default=sa.text("'[]'")),
+        sa.Column(
+            "contacts", sa.JSON(), nullable=False, server_default=sa.text("'[]'")
+        ),
         sa.Column(
             "created_at",
             sa.DateTime(timezone=True),
@@ -129,9 +133,14 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
-        op.f("ix_categories_category_slug"), "categories", ["category_slug"], unique=False
+        op.f("ix_categories_category_slug"),
+        "categories",
+        ["category_slug"],
+        unique=False,
     )
-    op.create_index(op.f("ix_categories_room_id"), "categories", ["room_id"], unique=False)
+    op.create_index(
+        op.f("ix_categories_room_id"), "categories", ["room_id"], unique=False
+    )
 
     op.create_table(
         "products",
@@ -141,11 +150,17 @@ def upgrade() -> None:
         sa.Column("retailer", sa.String(length=255), nullable=True),
         sa.Column("name", sa.String(length=500), nullable=False),
         sa.Column("price", sa.Float(), nullable=True),
-        sa.Column("currency", sa.String(length=10), nullable=False, server_default="USD"),
+        sa.Column(
+            "currency", sa.String(length=10), nullable=False, server_default="USD"
+        ),
         sa.Column("images", sa.JSON(), nullable=False, server_default=sa.text("'[]'")),
         sa.Column("category_slug", sa.String(length=120), nullable=False),
-        sa.Column("attributes", sa.JSON(), nullable=False, server_default=sa.text("'{}'")),
-        sa.Column("raw_specs", sa.JSON(), nullable=False, server_default=sa.text("'{}'")),
+        sa.Column(
+            "attributes", sa.JSON(), nullable=False, server_default=sa.text("'{}'")
+        ),
+        sa.Column(
+            "raw_specs", sa.JSON(), nullable=False, server_default=sa.text("'{}'")
+        ),
         sa.Column("scraped_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("user_notes", sa.String(), nullable=True),
         sa.Column("user_rating", sa.Integer(), nullable=True),

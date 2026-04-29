@@ -19,12 +19,20 @@ class LowesScraper(BaseScraper):
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()
             await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            await page.wait_for_selector('[data-selector="product-name"]', timeout=30000)
+            await page.wait_for_selector(
+                '[data-selector="product-name"]', timeout=30000
+            )
 
             name = clean_text(
-                await page.eval_on_selector('[data-selector="product-name"]', "el => el?.textContent || ''")
+                await page.eval_on_selector(
+                    '[data-selector="product-name"]', "el => el?.textContent || ''"
+                )
             )
-            price_text = clean_text(await page.eval_on_selector(".main-price", "el => el?.textContent || ''"))
+            price_text = clean_text(
+                await page.eval_on_selector(
+                    ".main-price", "el => el?.textContent || ''"
+                )
+            )
 
             rows = await page.query_selector_all("#product-specs-table tr")
             raw_specs: dict[str, str] = {}

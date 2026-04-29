@@ -31,7 +31,9 @@ class SchemaAliasNormalizer(BaseNormalizer):
 
         for attr in schema.get("attributes", []):
             canonical = attr.get("key")
-            aliases = [a.lower() for a in attr.get("retailer_aliases", {}).get(retailer, [])]
+            aliases = [
+                a.lower() for a in attr.get("retailer_aliases", {}).get(retailer, [])
+            ]
             if not canonical:
                 continue
 

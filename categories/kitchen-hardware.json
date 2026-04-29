@@ -1,0 +1,122 @@
+{
+  "slug": "kitchen-hardware",
+  "display_name": "Kitchen Hardware",
+  "description": "Cabinet pulls, knobs, and handles chosen for finish durability, ergonomics, and fit.",
+  "attributes": [
+    {
+      "key": "center_to_center_mm",
+      "label": "Center-to-Center",
+      "type": "number",
+      "unit": "mm",
+      "importance": "critical",
+      "explanation": "Hole spacing must match existing cabinet drilling.",
+      "retailer_aliases": {
+        "home_depot": [
+          "center to center measurement"
+        ],
+        "wayfair": [
+          "center to center"
+        ],
+        "lowes": [
+          "center-to-center"
+        ]
+      }
+    },
+    {
+      "key": "overall_length_mm",
+      "label": "Overall Length",
+      "type": "number",
+      "unit": "mm",
+      "importance": "medium",
+      "explanation": "Overall length affects grip comfort and visual scale.",
+      "retailer_aliases": {
+        "home_depot": [
+          "overall length"
+        ],
+        "wayfair": [
+          "overall width"
+        ],
+        "lowes": [
+          "length"
+        ]
+      }
+    },
+    {
+      "key": "material",
+      "label": "Material",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Solid brass and stainless generally outlast zinc in wet zones.",
+      "retailer_aliases": {
+        "home_depot": [
+          "material"
+        ],
+        "wayfair": [
+          "material"
+        ],
+        "lowes": [
+          "material"
+        ]
+      }
+    },
+    {
+      "key": "finish_type",
+      "label": "Finish",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "PVD and quality powder coatings resist wear and corrosion better.",
+      "retailer_aliases": {
+        "home_depot": [
+          "finish"
+        ],
+        "wayfair": [
+          "finish"
+        ],
+        "lowes": [
+          "finish family"
+        ]
+      }
+    },
+    {
+      "key": "warranty",
+      "label": "Warranty",
+      "type": "text",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Lifetime finish warranties are common for premium lines.",
+      "retailer_aliases": {
+        "home_depot": [
+          "warranty"
+        ],
+        "wayfair": [
+          "product warranty"
+        ],
+        "lowes": [
+          "warranty"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Hole Pattern Mismatch",
+      "description": "Even small spacing differences can make existing doors unusable."
+    },
+    {
+      "title": "Finish Inconsistency",
+      "description": "Match all pieces from one line to avoid color variance."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "Confirm metric spacing before ordering bulk packs.",
+    "Prefer corrosion-resistant finishes in kitchens.",
+    "Order one sample first to validate comfort and scale."
+  ],
+  "contractor_questions": [
+    "Can we reuse existing holes or need redrill/refinish?",
+    "Will long pulls interfere with adjacent appliance doors?",
+    "Do we need longer screws for thicker drawer fronts?"
+  ]
+}

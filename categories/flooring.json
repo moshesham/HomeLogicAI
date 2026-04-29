@@ -1,0 +1,122 @@
+{
+  "slug": "flooring",
+  "display_name": "Flooring",
+  "description": "Hard-surface flooring compared for wear resistance, water tolerance, comfort, and installation method.",
+  "attributes": [
+    {
+      "key": "product_type",
+      "label": "Type",
+      "type": "enum",
+      "unit": "",
+      "importance": "critical",
+      "explanation": "LVP, laminate, engineered wood, and tile have different performance profiles.",
+      "retailer_aliases": {
+        "home_depot": [
+          "flooring type"
+        ],
+        "wayfair": [
+          "floor type"
+        ],
+        "lowes": [
+          "type"
+        ]
+      }
+    },
+    {
+      "key": "wear_layer_mil",
+      "label": "Wear Layer",
+      "type": "number",
+      "unit": "mil",
+      "importance": "critical",
+      "explanation": "For LVP/LVT, wear layer strongly affects scratch and dent resistance.",
+      "retailer_aliases": {
+        "home_depot": [
+          "wear layer thickness"
+        ],
+        "wayfair": [
+          "wear layer"
+        ],
+        "lowes": [
+          "wear layer"
+        ]
+      }
+    },
+    {
+      "key": "waterproof",
+      "label": "Waterproof",
+      "type": "boolean",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Bathrooms/laundry spaces need waterproof core, not just water-resistant claims.",
+      "retailer_aliases": {
+        "home_depot": [
+          "water protection"
+        ],
+        "wayfair": [
+          "water resistant"
+        ],
+        "lowes": [
+          "waterproof"
+        ]
+      }
+    },
+    {
+      "key": "installation_method",
+      "label": "Installation Method",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Click-lock is generally faster; glue-down can reduce movement/noise.",
+      "retailer_aliases": {
+        "home_depot": [
+          "installation method"
+        ],
+        "wayfair": [
+          "installation type"
+        ],
+        "lowes": [
+          "installation"
+        ]
+      }
+    },
+    {
+      "key": "ac_rating",
+      "label": "AC Rating",
+      "type": "enum",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Laminate AC class indicates abrasion resistance for traffic level.",
+      "retailer_aliases": {
+        "home_depot": [
+          "ac rating"
+        ],
+        "wayfair": [
+          "abrasion class"
+        ],
+        "lowes": [
+          "ac rating"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Subfloor Flatness",
+      "description": "Most failures come from poor subfloor prep, not plank quality."
+    },
+    {
+      "title": "Transition Heights",
+      "description": "Door clearances and transitions can add hidden labor cost."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "Prioritize substrate prep and moisture testing.",
+    "Use thicker wear layers in high-traffic homes.",
+    "Account for underlayment and transition accessories in budget."
+  ],
+  "contractor_questions": [
+    "What subfloor prep is required before install?",
+    "Do we need vapor barrier in this room?",
+    "How will transitions be handled at each doorway?"
+  ]
+}

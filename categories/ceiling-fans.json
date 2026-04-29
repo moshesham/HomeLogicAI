@@ -1,0 +1,126 @@
+{
+  "slug": "ceiling-fans",
+  "display_name": "Ceiling Fans",
+  "description": "Airflow fixtures evaluated for room sizing, efficiency, motor quality, and control flexibility.",
+  "attributes": [
+    {
+      "key": "room_size_sqft",
+      "label": "Room Size (sq ft)",
+      "type": "range",
+      "unit": "sq ft",
+      "importance": "critical",
+      "explanation": "Blade span and CFM should match room size to avoid dead zones or overpowered airflow.",
+      "retailer_aliases": {
+        "home_depot": [
+          "room size",
+          "recommended room size"
+        ],
+        "wayfair": [
+          "room size recommendation"
+        ],
+        "lowes": [
+          "suggested room size"
+        ]
+      }
+    },
+    {
+      "key": "airflow_cfm",
+      "label": "Airflow (CFM)",
+      "type": "number",
+      "unit": "cfm",
+      "importance": "critical",
+      "explanation": "CFM is the primary indicator of real airflow performance.",
+      "retailer_aliases": {
+        "home_depot": [
+          "airflow (cfm)",
+          "cfm"
+        ],
+        "wayfair": [
+          "airflow efficiency",
+          "airflow"
+        ],
+        "lowes": [
+          "air flow cfm",
+          "maximum airflow"
+        ]
+      }
+    },
+    {
+      "key": "motor_type",
+      "label": "Motor Type",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "DC motors are quieter and more efficient than AC motors.",
+      "retailer_aliases": {
+        "home_depot": [
+          "motor type"
+        ],
+        "wayfair": [
+          "motor"
+        ],
+        "lowes": [
+          "motor technology"
+        ]
+      }
+    },
+    {
+      "key": "mount_type",
+      "label": "Mount Type",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Mount type must match ceiling height and slope.",
+      "retailer_aliases": {
+        "home_depot": [
+          "mounting type"
+        ],
+        "wayfair": [
+          "mounting"
+        ],
+        "lowes": [
+          "mounting options"
+        ]
+      }
+    },
+    {
+      "key": "damp_rating",
+      "label": "Damp/Wet Rating",
+      "type": "enum",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Outdoor or humid rooms require damp- or wet-rated fixtures.",
+      "retailer_aliases": {
+        "home_depot": [
+          "location use"
+        ],
+        "wayfair": [
+          "dry, damp or wet location listed"
+        ],
+        "lowes": [
+          "location rating"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Ceiling Height Clearance",
+      "description": "Verify blade-to-floor clearance and required downrod length before ordering."
+    },
+    {
+      "title": "Fan + Light Compatibility",
+      "description": "Some fans include non-replaceable LED modules; confirm serviceability and color temperature."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "CFM matters more than blade count.",
+    "DC motors are usually quieter and more efficient.",
+    "Mount type must fit ceiling height and slope."
+  ],
+  "contractor_questions": [
+    "What downrod length gives safe blade clearance in this room?",
+    "Is the existing ceiling box fan-rated or does it need replacement?",
+    "Do we need separate fan/light wall controls?"
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "slug": "cabinet-storage",
+  "display_name": "Cabinet Storage",
+  "description": "Interior organizers selected for load capacity, smooth operation, and usable-space gains.",
+  "attributes": [
+    {
+      "key": "cabinet_width_in",
+      "label": "Cabinet Width",
+      "type": "number",
+      "unit": "in",
+      "importance": "critical",
+      "explanation": "Organizer width must match opening and hinge intrusion.",
+      "retailer_aliases": {
+        "home_depot": [
+          "minimum cabinet opening"
+        ],
+        "wayfair": [
+          "fits cabinet width"
+        ],
+        "lowes": [
+          "cabinet opening"
+        ]
+      }
+    },
+    {
+      "key": "weight_capacity_lbs",
+      "label": "Weight Capacity",
+      "type": "number",
+      "unit": "lbs",
+      "importance": "high",
+      "explanation": "Heavy cookware and pantry items require robust slide ratings.",
+      "retailer_aliases": {
+        "home_depot": [
+          "load capacity"
+        ],
+        "wayfair": [
+          "weight capacity"
+        ],
+        "lowes": [
+          "maximum load"
+        ]
+      }
+    },
+    {
+      "key": "extension_type",
+      "label": "Extension Type",
+      "type": "enum",
+      "unit": "",
+      "importance": "high",
+      "explanation": "Full-extension provides complete access to rear contents.",
+      "retailer_aliases": {
+        "home_depot": [
+          "slide extension"
+        ],
+        "wayfair": [
+          "drawer extension"
+        ],
+        "lowes": [
+          "extension"
+        ]
+      }
+    },
+    {
+      "key": "soft_close",
+      "label": "Soft Close",
+      "type": "boolean",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Soft-close reduces wear and improves user experience.",
+      "retailer_aliases": {
+        "home_depot": [
+          "soft close"
+        ],
+        "wayfair": [
+          "soft close"
+        ],
+        "lowes": [
+          "soft-close"
+        ]
+      }
+    },
+    {
+      "key": "material",
+      "label": "Material",
+      "type": "enum",
+      "unit": "",
+      "importance": "medium",
+      "explanation": "Steel frames and quality plywood trays outlast light wire assemblies.",
+      "retailer_aliases": {
+        "home_depot": [
+          "material"
+        ],
+        "wayfair": [
+          "frame material"
+        ],
+        "lowes": [
+          "material"
+        ]
+      }
+    }
+  ],
+  "watch_out_factors": [
+    {
+      "title": "Hinge and Face-Frame Interference",
+      "description": "Organizer travel can be blocked by door hinges or narrow openings."
+    },
+    {
+      "title": "Under-Sink Obstructions",
+      "description": "Plumbing and disposal placement can reduce usable pull-out depth."
+    }
+  ],
+  "buyer_guide_key_points": [
+    "Measure opening width/depth/height exactly.",
+    "Verify load rating for intended items.",
+    "Soft-close full-extension hardware pays off long term."
+  ],
+  "contractor_questions": [
+    "Can this organizer clear existing hinges and trim?",
+    "Will plumbing relocation be required for under-sink units?",
+    "What mounting reinforcement is needed?"
+  ]
+}

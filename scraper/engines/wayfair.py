@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import clean_text, parse_price
+from scraper.security import domain_matches
 
 
 class WayfairScraper(BaseScraper):
     def detect(self, url: str) -> bool:
-        return "wayfair." in url.lower()
+        return domain_matches(url, "wayfair.com")
 
     @property
     def retailer_name(self) -> str:

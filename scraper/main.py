@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from urllib.parse import urlparse
 
+import httpx
 from fastapi import FastAPI
 from pydantic import BaseModel, HttpUrl
 
@@ -17,6 +17,12 @@ from scraper.engines import (
 )
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import normalize_spec_map
+from scraper.security import domain_matches, validate_outbound_url
+
+try:
+    from playwright.async_api import Error as PlaywrightError
+except Exception:  # pragma: no cover
+    PlaywrightError = RuntimeError
 
 app = FastAPI(
     title="HomeLogicAI Scraper", version="0.1.0", description="Retail scraper service"
@@ -47,24 +53,22 @@ def _detect_engine(url: str) -> BaseScraper:
 
 
 def _detect_retailer(url: str) -> str:
-    hostname = urlparse(url).hostname or ""
-    hostname = hostname.lower()
-    if "homedepot.com" in hostname:
+    if domain_matches(url, "homedepot.com"):
         return "home_depot"
-    if "wayfair" in hostname:
+    if domain_matches(url, "wayfair.com"):
         return "wayfair"
-    if "lowes.com" in hostname:
+    if domain_matches(url, "lowes.com"):
         return "lowes"
-    if "ikea" in hostname:
+    if domain_matches(url, "ikea.com"):
         return "ikea"
-    if "amazon" in hostname:
+    if domain_matches(url, "amazon.com"):
         return "amazon"
     return "generic"
 
 
 @app.post("/scrape")
 async def scrape_product(payload: ScrapeRequest) -> dict:
-    url = str(payload.url)
+    url = validate_outbound_url(str(payload.url))
 
     if not payload.force_refresh:
         cached = _cache.get(url)
@@ -96,7 +100,7 @@ async def scrape_product(payload: ScrapeRequest) -> dict:
 
         _cache.set(url, result)
         return result
-    except Exception as exc:  # noqa: BLE001
+    except (ValueError, httpx.HTTPError, PlaywrightError, TimeoutError, OSError):
         partial_data = {
             "source_url": url,
             "retailer": retailer,
@@ -106,7 +110,10 @@ async def scrape_product(payload: ScrapeRequest) -> dict:
             "images": [],
             "is_partial": True,
         }
-        return {"error": str(exc), "partial_data": partial_data}
+        return {
+            "error": "Scraping failed for the requested URL",
+            "partial_data": partial_data,
+        }
 
 
 @app.get("/health")

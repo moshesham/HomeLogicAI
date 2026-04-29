@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import clean_text, parse_price
+from scraper.security import domain_matches
 
 
 class HomeDepotScraper(BaseScraper):
     def detect(self, url: str) -> bool:
-        return "homedepot.com" in url.lower()
+        return domain_matches(url, "homedepot.com")
 
     @property
     def retailer_name(self) -> str:

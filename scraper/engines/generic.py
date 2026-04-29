@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import clean_text, parse_price
+from scraper.security import validate_outbound_url
 
 
 class GenericScraper(BaseScraper):
@@ -18,6 +19,7 @@ class GenericScraper(BaseScraper):
         return "generic"
 
     async def scrape(self, url: str) -> dict:
+        validate_outbound_url(url)
         async with httpx.AsyncClient(timeout=20, follow_redirects=True) as client:
             response = await client.get(url)
             response.raise_for_status()

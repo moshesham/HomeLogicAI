@@ -5,17 +5,19 @@ from bs4 import BeautifulSoup
 
 from scraper.engines.base import BaseScraper
 from scraper.engines.common import clean_text, parse_price
+from scraper.security import domain_matches, validate_outbound_url
 
 
 class AmazonScraper(BaseScraper):
     def detect(self, url: str) -> bool:
-        return "amazon." in url.lower()
+        return domain_matches(url, "amazon.com")
 
     @property
     def retailer_name(self) -> str:
         return "amazon"
 
     async def _scrape_with_bs4(self, url: str) -> dict:
+        validate_outbound_url(url)
         async with httpx.AsyncClient(timeout=20, follow_redirects=True) as client:
             response = await client.get(url)
             response.raise_for_status()
